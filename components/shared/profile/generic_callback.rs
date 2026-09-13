@@ -5,6 +5,7 @@
 use malloc_size_of_derive::MallocSizeOf;
 use serde::{Deserialize, Serialize};
 use servo_base::generic_channel::{SendError, SendResult};
+
 use crate::generic_channel::GenericReceiver;
 use crate::time::{ProfilerCategory, ProfilerChan};
 use crate::time_profile;
@@ -41,7 +42,7 @@ where
                 callback,
                 time_profiler_chan: time_profiler_chan.clone(),
             },
-            GenericReceiver::new(receiver, time_profiler_chan)
+            GenericReceiver::new(receiver, time_profiler_chan),
         ))
     }
 

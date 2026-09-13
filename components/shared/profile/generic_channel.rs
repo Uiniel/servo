@@ -20,7 +20,10 @@ impl<T> GenericReceiver<T>
 where
     T: for<'de> Deserialize<'de> + Serialize,
 {
-    pub(crate) fn new(receiver: generic_channel::GenericReceiver<T>, time_profile_chan: ProfilerChan) -> Self {
+    pub(crate) fn new(
+        receiver: generic_channel::GenericReceiver<T>,
+        time_profile_chan: ProfilerChan,
+    ) -> Self {
         Self {
             receiver,
             time_profile_chan,
