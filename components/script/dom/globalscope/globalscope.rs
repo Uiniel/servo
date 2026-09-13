@@ -2294,7 +2294,7 @@ impl GlobalScope {
     }
 
     fn read_msg(
-        receiver: generic_channel::GenericReceiver<FileManagerResult<ReadFileProgress>>,
+        receiver: profile_generic_channel::GenericReceiver<FileManagerResult<ReadFileProgress>>,
     ) -> Result<Vec<u8>, ()> {
         let mut bytes = vec![];
 

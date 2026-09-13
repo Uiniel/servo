@@ -5,7 +5,7 @@
 use malloc_size_of_derive::MallocSizeOf;
 use serde::{Deserialize, Serialize};
 use servo_base::generic_channel::{SendError, SendResult};
-
+use crate::generic_channel::GenericReceiver;
 use crate::time::{ProfilerCategory, ProfilerChan};
 use crate::time_profile;
 
@@ -34,14 +34,14 @@ where
 
     pub fn new_blocking(
         time_profiler_chan: ProfilerChan,
-    ) -> Result<(Self, servo_base::generic_channel::GenericReceiver<T>), SendError> {
+    ) -> Result<(Self, GenericReceiver<T>), SendError> {
         let (callback, receiver) = servo_base::generic_channel::GenericCallback::new_blocking()?;
         Ok((
             GenericCallback {
                 callback,
-                time_profiler_chan,
+                time_profiler_chan: time_profiler_chan.clone(),
             },
-            receiver,
+            GenericReceiver::new(receiver, time_profiler_chan)
         ))
     }
 
