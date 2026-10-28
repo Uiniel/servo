@@ -3,6 +3,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 use std::cell::Cell;
+use std::collections::HashSet;
 use std::ptr::{self, NonNull};
 use std::rc::Rc;
 
@@ -372,6 +373,7 @@ impl WindowProxy {
             document.get_referrer_policy(),
             None, // Doesn't inherit secure context
             None,
+            HashSet::new(),
             false,
             sandboxing_flag_set,
         );
@@ -621,6 +623,7 @@ impl WindowProxy {
                 target_document.get_referrer_policy(),
                 Some(target_window.as_global_scope().is_secure_context()),
                 Some(target_document.insecure_requests_policy()),
+                target_window.as_global_scope().upgrade_insecure_navigations_set().clone(),
                 has_trustworthy_ancestor_origin,
                 target_document.creation_sandboxing_flag_set_considering_parent_iframe(),
             );
