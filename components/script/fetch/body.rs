@@ -195,9 +195,9 @@ impl TransmitBodyConnectHandler {
 
         // If we're using an actual ReadableStream, acquire a reader for it.
         if let SendableBody::Stream {
-            source: BodySource::Null,
             stream,
             task_source,
+            ..
         } = &self.body
         {
             let stream = stream.clone();
